@@ -16,4 +16,12 @@ public class FsmPair {
     public String getState() {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return "FsmPair{" +
+                "input='" + input + '\'' +
+                ", state='" + state + '\'' +
+                '}';
+    }
 }

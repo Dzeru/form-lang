@@ -12,6 +12,7 @@ public class FiniteStateMachine {
     private Set<String> start;
     private Set<String> finish;
     private Set<String> currentStates;
+    private boolean isRegExp = false;
 
     public FiniteStateMachine(int res,
                               boolean success,
@@ -26,6 +27,21 @@ public class FiniteStateMachine {
         this.currentStates = start;
     }
 
+    public FiniteStateMachine(int res,
+                              boolean success,
+                              Map<FsmPair, String> states,
+                              Set<String> start,
+                              Set<String> finish,
+                              boolean isRegExp) {
+        this.res = res;
+        this.success = success;
+        this.states = states;
+        this.start = start;
+        this.finish = finish;
+        this.currentStates = start;
+        this.isRegExp = isRegExp;
+    }
+
     public FiniteStateMachine(Map<FsmPair, String> states,
                               Set<String> start,
                               Set<String> finish) {
@@ -35,9 +51,21 @@ public class FiniteStateMachine {
         this.currentStates = start;
     }
 
+    public FiniteStateMachine(Map<FsmPair, String> states,
+                              Set<String> start,
+                              Set<String> finish,
+                              boolean isRegExp) {
+        this.states = states;
+        this.start = start;
+        this.finish = finish;
+        this.currentStates = start;
+        this.isRegExp = isRegExp;
+    }
+
     public FiniteStateMachine() {
     }
 
+    //TODO: read about regexp patterns and ability to find indexes
     public Map.Entry<Boolean, Integer> max(String input, int skip) {
         Map<Boolean, Integer> resSuccess = new HashMap<>();
         int counter = 0;
@@ -129,5 +157,26 @@ public class FiniteStateMachine {
 
     public void setCurrentStates(Set<String> currentStates) {
         this.currentStates = currentStates;
+    }
+
+    public boolean isRegExp() {
+        return isRegExp;
+    }
+
+    public void setRegExp(boolean regExp) {
+        isRegExp = regExp;
+    }
+
+    @Override
+    public String toString() {
+        return "FiniteStateMachine{" +
+                "res=" + res +
+                ", success=" + success +
+                ", states=" + states +
+                ", start=" + start +
+                ", finish=" + finish +
+                ", currentStates=" + currentStates +
+                ", isRegExp=" + isRegExp +
+                '}';
     }
 }
