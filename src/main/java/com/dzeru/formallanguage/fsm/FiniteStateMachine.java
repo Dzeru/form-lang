@@ -89,6 +89,7 @@ public class FiniteStateMachine {
         }
 
         resSuccess.put(this.success, this.res);
+        reset();
         return resSuccess.entrySet().iterator().next();
     }
 
@@ -178,5 +179,11 @@ public class FiniteStateMachine {
                 ", currentStates=" + currentStates +
                 ", isRegExp=" + isRegExp +
                 '}';
+    }
+
+    private void reset() {
+        this.currentStates = start;
+        this.res = 0;
+        this.success = false;
     }
 }

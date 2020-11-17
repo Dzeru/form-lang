@@ -1,5 +1,7 @@
 package com.dzeru.formallanguage.fsm;
 
+import com.dzeru.formallanguage.lexeme.Lexeme;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -40,12 +42,28 @@ public class FsmFamilyHelper {
         return families;
     }
 
+    public static List<Lexeme> max(String input, int skip) {
+        List<Lexeme> lexemes = new ArrayList<>();
+        for(Map.Entry<String, FsmFamily> fsmFamilyEntry: fsmFamilies.entrySet()) {
+            for(FiniteStateMachine fsm : fsmFamilyEntry.getValue().getFiniteStateMachines()) {
+                Map.Entry<Boolean, Integer> mx = fsm.max(input, skip);
+                if(mx.getKey()) {
+                    lexemes.add(new Lexeme(skip, skip + mx.getValue(), fsmFamilyEntry.getKey()));
+                }
+            }
+        }
+        return lexemes;
+    }
+
     private static int getPriorityByFamilyName(String familyName) {
         switch(familyName) {
             case "assignment": return 10;
             case "boolean": return 9;
             case "keyword": return 10;
             case "number": return 8;
+            case "operator": return 9;
+            case "whitespace": return 1;
+            case "id": return 1;
             default: return 1;
         }
     }
