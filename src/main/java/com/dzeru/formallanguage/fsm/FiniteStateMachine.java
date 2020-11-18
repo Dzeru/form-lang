@@ -65,49 +65,57 @@ public class FiniteStateMachine {
     }
 
     public Map.Entry<Boolean, Integer> max(String input, int skip) {
-        Map<Boolean, Integer> resSuccess = new HashMap<>();
-        if(isRegExp) {
-            if(states.keySet().iterator().hasNext()) {
-                Pattern pattern = Pattern.compile(states.keySet().iterator().next().getInput());
-                Matcher matcher = pattern.matcher(input.substring(skip));
-                if(matcher.find()) {
-                    if(matcher.start() == 0) {
-                        this.success = true;
-                        this.res = matcher.end() - matcher.start();
-                        resSuccess.put(this.success, this.res);
-                        reset();
-                    }
-                }
-            }
-        }
-        else {
-            int counter = 0;
-            for(int i = Math.max(0, skip); i < input.length(); i++) {
-                if(hasFinalState()) {
-                    this.res = counter;
-                    this.success = true;
-                }
-                String curChar = String.valueOf(input.charAt(i));
-                this.currentStates = findNextStates(curChar, this.currentStates);
-                if(this.currentStates.isEmpty()) {
-                    break;
-                }
-                else {
-                    counter++;
-                }
-            }
-            if(hasFinalState()) {
-                this.res = counter;
-                this.success = true;
-            }
+        Map<Boolean, Integer> resSuccess;
+        if(isRegExp) resSuccess = maxRegExp(input, skip);
+        else resSuccess = maxUsual(input, skip);
+        return resSuccess.entrySet().iterator().next();
+    }
 
-            resSuccess.put(this.success, this.res);
-            reset();
+    private Map<Boolean, Integer> maxRegExp(String input, int skip) {
+        Map<Boolean, Integer> resSuccess = new HashMap<>();
+        if(states.keySet().iterator().hasNext()) {
+            Pattern pattern = Pattern.compile(states.keySet().iterator().next().getInput());
+            Matcher matcher = pattern.matcher(input.substring(skip));
+            if(matcher.find()) {
+                if(matcher.start() == 0) {
+                    this.success = true;
+                    this.res = matcher.end() - matcher.start();
+                    resSuccess.put(this.success, this.res);
+                    reset();
+                }
+            }
         }
         if(resSuccess.isEmpty()) {
             resSuccess.put(false, 0);
         }
-        return resSuccess.entrySet().iterator().next();
+        return resSuccess;
+    }
+
+    private Map<Boolean, Integer> maxUsual(String input, int skip) {
+        Map<Boolean, Integer> resSuccess = new HashMap<>();
+        int counter = 0;
+        for(int i = Math.max(0, skip); i < input.length(); i++) {
+            if(hasFinalState()) {
+                this.res = counter;
+                this.success = true;
+            }
+            String curChar = String.valueOf(input.charAt(i));
+            this.currentStates = findNextStates(curChar, this.currentStates);
+            if(this.currentStates.isEmpty()) {
+                break;
+            }
+            else {
+                counter++;
+            }
+        }
+        if(hasFinalState()) {
+            this.res = counter;
+            this.success = true;
+        }
+
+        resSuccess.put(this.success, this.res);
+        reset();
+        return resSuccess;
     }
 
     private boolean hasFinalState() {
