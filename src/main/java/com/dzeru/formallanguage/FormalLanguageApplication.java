@@ -69,13 +69,16 @@ public class FormalLanguageApplication {
                 int skip = Integer.parseInt(br.readLine());
                 // C:\bagpack\aprojects\formal-language\src\main\resources\test1.json
                 // C:\bagpack\aprojects\formal-language\src\main\resources\test2.json
+                // C:\bagpack\aprojects\formal-language\src\main\resources\lexer\real\number.json
+                // C:\bagpack\aprojects\formal-language\src\main\resources\lexer\int\int.json
+                // C:\bagpack\aprojects\formal-language\src\main\resources\lexer\id\id.json
                 // 12345
                 String json = new String(Files.readAllBytes(Paths.get(dir)));
                 FiniteStateMachine finiteStateMachine = FsmConverter.fromJson(json);
                 Map.Entry<Boolean, Integer> mx = finiteStateMachine.max(input, skip);
                 System.out.println(String.format("Результат работы автомата: success = %s, res = %d", mx.getKey(), mx.getValue()));
                 if(mx.getKey()) {
-                    System.out.println("Вывод: " + input.substring(skip, skip + mx.getValue()));
+                    System.out.println("Вывод:" + input.substring(skip, skip + mx.getValue()) + ":");
                 }
                 System.out.print("Хотите ввести еще? [y/n, да/нет] ");
                 String continueInput = br.readLine();
@@ -94,13 +97,14 @@ public class FormalLanguageApplication {
         try {
             FsmFamilyHelper.loadFsmFamilies(lexerPaths);
             // C:\bagpack\aprojects\formal-language\src\main\resources\lexer.js
+            // C:\bagpack\aprojects\formal-language\src\main\resources\lexer2.js
             System.out.println("Введите путь к анализируемому файлу:");
             String analyzePath = br.readLine();
             System.out.println("Содержимое файла:");
             String analyzeText = new String(Files.readAllBytes(Paths.get(analyzePath)));
             System.out.println(analyzeText);
             LexemeFinder lexemeFinder = new LexemeFinder(analyzeText);
-            Set<Lexeme> lexemes = lexemeFinder.findAllLexemes(0);
+            List<Lexeme> lexemes = lexemeFinder.findAllLexemes(0);
             lexemeFinder.printLexemes(lexemes);
         }
         catch(Exception e) {

@@ -17,7 +17,7 @@ public class LexemeFinder {
         return text;
     }
 
-    public Set<Lexeme> findAllLexemes(int skip) {
+    public List<Lexeme> findAllLexemes(int skip) {
         int i = skip;
         List<Lexeme> allLexemes = new ArrayList<>();
         while(i < text.length()) {
@@ -36,18 +36,18 @@ public class LexemeFinder {
         return filterByPriority(allLexemes);
     }
 
-    public void printLexemes(Set<Lexeme> lexemes) {
+    public void printLexemes(List<Lexeme> lexemes) {
         System.out.println("ЛЕКСЕМЫ");
         System.out.println(String.format("Найдено лексем: %d", lexemes.size()));
         for(Lexeme lexeme : lexemes) {
-            System.out.println(text.substring(lexeme.getStartPos(), lexeme.getEndPos()));
+            System.out.println(":" + text.substring(lexeme.getStartPos(), lexeme.getEndPos()) + ":");
             System.out.println(lexeme);
             System.out.println("---------");
         }
     }
 
-    private Set<Lexeme> filterByPriority(List<Lexeme> lexemes) {
-        Set<Lexeme> filteredLexemes = new TreeSet<>(lexemes);
+    private List<Lexeme> filterByPriority(List<Lexeme> lexemes) {
+        List<Lexeme> filteredLexemes = new ArrayList<>(lexemes);
 
         for(int i = 0; i < lexemes.size(); i++) {
             for(int k = i + 1; k < lexemes.size(); k++) {

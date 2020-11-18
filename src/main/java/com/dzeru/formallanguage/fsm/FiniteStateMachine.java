@@ -1,9 +1,8 @@
 package com.dzeru.formallanguage.fsm;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FiniteStateMachine {
     private int res = 0;
@@ -65,31 +64,49 @@ public class FiniteStateMachine {
     public FiniteStateMachine() {
     }
 
-    //TODO: read about regexp patterns and ability to find indexes
     public Map.Entry<Boolean, Integer> max(String input, int skip) {
         Map<Boolean, Integer> resSuccess = new HashMap<>();
-        int counter = 0;
-        for(int i = Math.max(0, skip); i < input.length(); i++) {
+        if(isRegExp) {
+            if(states.keySet().iterator().hasNext()) {
+                Pattern pattern = Pattern.compile(states.keySet().iterator().next().getInput());
+                Matcher matcher = pattern.matcher(input.substring(skip));
+                if(matcher.find()) {
+                    if(matcher.start() == 0) {
+                        this.success = true;
+                        this.res = matcher.end() - matcher.start();
+                        resSuccess.put(this.success, this.res);
+                        reset();
+                    }
+                }
+            }
+        }
+        else {
+            int counter = 0;
+            for(int i = Math.max(0, skip); i < input.length(); i++) {
+                if(hasFinalState()) {
+                    this.res = counter;
+                    this.success = true;
+                }
+                String curChar = String.valueOf(input.charAt(i));
+                this.currentStates = findNextStates(curChar, this.currentStates);
+                if(this.currentStates.isEmpty()) {
+                    break;
+                }
+                else {
+                    counter++;
+                }
+            }
             if(hasFinalState()) {
                 this.res = counter;
                 this.success = true;
             }
-            String curChar = String.valueOf(input.charAt(i));
-            this.currentStates = findNextStates(curChar, this.currentStates);
-            if(this.currentStates.isEmpty()) {
-                break;
-            }
-            else {
-                counter++;
-            }
-        }
-        if(hasFinalState()) {
-            this.res = counter;
-            this.success = true;
-        }
 
-        resSuccess.put(this.success, this.res);
-        reset();
+            resSuccess.put(this.success, this.res);
+            reset();
+        }
+        if(resSuccess.isEmpty()) {
+            resSuccess.put(false, 0);
+        }
         return resSuccess.entrySet().iterator().next();
     }
 

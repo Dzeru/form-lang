@@ -58,12 +58,12 @@ public class FsmFamilyHelper {
     private static int getPriorityByFamilyName(String familyName) {
         switch(familyName) {
             case "assignment": return 10;
-            case "boolean": return 9;
             case "keyword": return 10;
-            case "number": return 8;
+            case "boolean": return 9;
             case "operator": return 9;
+            case "number": return 8;
             case "whitespace": return 1;
-            case "id": return 1;
+            case "id": return 2;
             default: return 1;
         }
     }

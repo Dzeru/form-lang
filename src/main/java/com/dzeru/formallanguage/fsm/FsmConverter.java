@@ -16,6 +16,13 @@ public class FsmConverter {
             startStates.add(s.getAsString());
         }
         JsonArray finish = jsonObject.get("finish").getAsJsonArray();
+        boolean isRegExp;
+        try {
+            isRegExp = jsonObject.get("isRegExp").getAsBoolean();
+        }
+        catch(Exception e) {
+            isRegExp = false;
+        }
         Set<String> finishStates = new HashSet<>();
         for(JsonElement f : finish) {
             finishStates.add(f.getAsString());
@@ -32,6 +39,6 @@ public class FsmConverter {
             }
         }
 
-        return new FiniteStateMachine(states, startStates, finishStates);
+        return new FiniteStateMachine(states, startStates, finishStates, isRegExp);
     }
 }
