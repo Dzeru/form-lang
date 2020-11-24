@@ -14,36 +14,35 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class FormalLanguageApplication {
 
     private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     private static final List<String> lexerPaths = Arrays.asList(
-            "C:\\bagpack\\aprojects\\formal-language\\src\\main\\resources\\lexer\\assignment\\assignment.json",
-            "C:\\bagpack\\aprojects\\formal-language\\src\\main\\resources\\lexer\\boolean\\false.json",
-            "C:\\bagpack\\aprojects\\formal-language\\src\\main\\resources\\lexer\\keyword\\break.json",
-            "C:\\bagpack\\aprojects\\formal-language\\src\\main\\resources\\lexer\\keyword\\let.json",
-            "C:\\bagpack\\aprojects\\formal-language\\src\\main\\resources\\lexer\\keyword\\var.json",
-            "C:\\bagpack\\aprojects\\formal-language\\src\\main\\resources\\lexer\\keyword\\while.json",
-            "C:\\bagpack\\aprojects\\formal-language\\src\\main\\resources\\lexer\\number\\number.json",
-            "C:\\bagpack\\aprojects\\formal-language\\src\\main\\resources\\lexer\\operator\\and.json",
-            "C:\\bagpack\\aprojects\\formal-language\\src\\main\\resources\\lexer\\operator\\closecurlybracket.json",
-            "C:\\bagpack\\aprojects\\formal-language\\src\\main\\resources\\lexer\\operator\\closeroundbracket.json",
-            "C:\\bagpack\\aprojects\\formal-language\\src\\main\\resources\\lexer\\operator\\div.json",
-            "C:\\bagpack\\aprojects\\formal-language\\src\\main\\resources\\lexer\\operator\\g.json",
-            "C:\\bagpack\\aprojects\\formal-language\\src\\main\\resources\\lexer\\operator\\le.json",
-            "C:\\bagpack\\aprojects\\formal-language\\src\\main\\resources\\lexer\\operator\\minus.json",
-            "C:\\bagpack\\aprojects\\formal-language\\src\\main\\resources\\lexer\\operator\\not.json",
-            "C:\\bagpack\\aprojects\\formal-language\\src\\main\\resources\\lexer\\operator\\opencurlybracket.json",
-            "C:\\bagpack\\aprojects\\formal-language\\src\\main\\resources\\lexer\\operator\\openroundbracket.json",
-            "C:\\bagpack\\aprojects\\formal-language\\src\\main\\resources\\lexer\\operator\\semicolon.json",
-            "C:\\bagpack\\aprojects\\formal-language\\src\\main\\resources\\lexer\\id\\id.json",
-            "C:\\bagpack\\aprojects\\formal-language\\src\\main\\resources\\lexer\\whitespace\\n.json",
-            "C:\\bagpack\\aprojects\\formal-language\\src\\main\\resources\\lexer\\whitespace\\r.json",
-            "C:\\bagpack\\aprojects\\formal-language\\src\\main\\resources\\lexer\\whitespace\\t.json",
-            "C:\\bagpack\\aprojects\\formal-language\\src\\main\\resources\\lexer\\whitespace\\whitespace.json"
+            "lexer\\assignment\\assignment.json",
+            "lexer\\boolean\\false.json",
+            "lexer\\keyword\\break.json",
+            "lexer\\keyword\\let.json",
+            "lexer\\keyword\\var.json",
+            "lexer\\keyword\\while.json",
+            "lexer\\number\\number.json",
+            "lexer\\operator\\and.json",
+            "lexer\\operator\\closecurlybracket.json",
+            "lexer\\operator\\closeroundbracket.json",
+            "lexer\\operator\\div.json",
+            "lexer\\operator\\g.json",
+            "lexer\\operator\\le.json",
+            "lexer\\operator\\minus.json",
+            "lexer\\operator\\not.json",
+            "lexer\\operator\\opencurlybracket.json",
+            "lexer\\operator\\openroundbracket.json",
+            "lexer\\operator\\semicolon.json",
+            "lexer\\id\\id.json",
+            "lexer\\whitespace\\n.json",
+            "lexer\\whitespace\\r.json",
+            "lexer\\whitespace\\t.json",
+            "lexer\\whitespace\\whitespace.json"
     );
 
     public static void main(String[] args) throws IOException {
