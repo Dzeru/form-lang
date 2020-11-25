@@ -3,17 +3,17 @@ package com.dzeru.formallanguage.fsm;
 import com.dzeru.formallanguage.lexeme.Lexeme;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class FsmFamilyHelper {
     // k - family name, v - family
     private static Map<String, FsmFamily> fsmFamilies = new HashMap<>();
+
+    private static Properties priorities = new Properties();
 
     public static void loadFsmFamilies(List<String> paths) throws Exception {
         for(String path: paths) {
@@ -58,15 +58,21 @@ public class FsmFamilyHelper {
     }
 
     private static int getPriorityByFamilyName(String familyName) {
-        switch(familyName) {
-            case "assignment": return 10;
-            case "keyword": return 10;
-            case "boolean": return 9;
-            case "operator": return 9;
-            case "number": return 8;
-            case "whitespace": return 1;
-            case "id": return 2;
-            default: return 1;
+        if(priorities.isEmpty()) initPriorities();
+        return Integer.parseInt((String) priorities.getOrDefault(familyName, 0));
+    }
+
+    private static void initPriorities() {
+        try {
+            priorities = new Properties();
+            priorities.load(
+                    Thread
+                            .currentThread()
+                            .getContextClassLoader()
+                            .getResourceAsStream("priorities.properties"));
+        }
+        catch(IOException e) {
+            System.err.println("Fail to load lexeme priorities!");
         }
     }
 
