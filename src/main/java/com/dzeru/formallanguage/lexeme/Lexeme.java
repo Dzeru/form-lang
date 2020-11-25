@@ -1,6 +1,7 @@
 package com.dzeru.formallanguage.lexeme;
 
 import java.util.Comparator;
+import java.util.Objects;
 
 public class Lexeme implements Comparable<Lexeme> {
     private final int startPos;
@@ -32,6 +33,21 @@ public class Lexeme implements Comparable<Lexeme> {
                 ", endPos='" + endPos + '\'' +
                 ", family='" + family + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(this == o) return true;
+        if(o == null || getClass() != o.getClass()) return false;
+        Lexeme lexeme = (Lexeme) o;
+        return getStartPos() == lexeme.getStartPos() &&
+                getEndPos() == lexeme.getEndPos() &&
+                Objects.equals(getFamily(), lexeme.getFamily());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getStartPos(), getEndPos(), getFamily());
     }
 
     @Override
